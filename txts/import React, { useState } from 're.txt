@@ -1,0 +1,62 @@
+import React, { useState } from 'react';
+import './App.css';
+
+function App() {
+  const apiKey = '914b8ee166ef0b97ca4e28acdd4016d0';
+  const [weatherData, setWeatherData] = useState({});
+  const [city, setCity] = useState('');
+  const [fahrenheit, setFahrenheit] = useState();
+
+  const getWeather = (event) => {
+    if (event.key === 'Enter') {
+      fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setWeatherData(data);
+          setCity('');
+          waveHello(data.main.temp);
+        });
+    }
+  };
+
+  function waveHello(fahrenheitValue) {
+    console.log('wave');
+    const celsiusValue = fahrenheitValue - 273;
+    setFahrenheit(celsiusValue);
+  }
+
+  return (
+    <div className='container'>
+      <input
+        className='input'
+        placeholder='Enter city'
+        onChange={(e) => setCity(e.target.value)}
+        value={city}
+        onKeyPress={getWeather}
+      />
+
+      {typeof weatherData.main === 'undefined' ? (
+        <div>
+          <p>Welcome To weather app! Enter a city to get weather data</p>
+        </div>
+      ) : (
+        <div className='weather-data'>
+          <p className='city'>{weatherData.name}</p>
+          <p className='temp'>{Math.round(fahrenheit)}°C</p>
+          <p className='weather'>{weatherData.weather[0].main}</p>
+          <p>{fahrenheit}°F</p>
+        </div>
+      )}
+
+      {weatherData.cod === '404' ? (
+        <div>City Not Found</div>
+      ) : (
+        <div></div>
+      )}
+    </div>
+  );
+}
+
+export default App;
