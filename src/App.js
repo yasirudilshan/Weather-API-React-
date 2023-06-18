@@ -60,6 +60,7 @@ function App() {
           <p>Welcome To weather app! Enter a city to get weather data</p>
         </div>
       ) : (
+        <div className="text-background">
         <div className="weather-data">
           {backgroundChange()}
           <p className="city">{weatherData.name}</p>
@@ -68,6 +69,7 @@ function App() {
           <p className="weather">{weatherData.weather[0].main}</p>
 
           <p>{fahrenheit}</p>
+        </div>
         </div>
       )}
 
