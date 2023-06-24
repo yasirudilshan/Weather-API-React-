@@ -5,6 +5,7 @@ body{
   background-size: 100%;
   animation: fade-in 1s ease-in;
   backdrop-filter: blur(8px); 
+  transition: 0.5s ease;
 
 }
 
